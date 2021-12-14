@@ -51,24 +51,29 @@ class DiceRoller:
                 return number
 
             elif self.events == "Quit":
+                self.window.close()
                 self.window = sg.Window("Thank you", layout = self.end_layout)
 
         except:
+            self.window.close()
             self.window = sg.Window("Error", self.error_layout)
 
     def get_rolling(self):
 
         number = self.choose_dice_count()            
         
+        self.window.close()
         self.window = sg.Window("You just rolled " + str(number) + "dice! The values are: " + str(self.roll(number)), layout = self.main_layout )
 
         self.events, self.values = self.window.Read()
         #interface probabilities
         try:
             if self.events == "Yes":
+                self.window.close()
                 self.get_rolling()
 
             elif self.events == "No":
+                self.window.close()
                 self.window = sg.Window("Thank you", layout = self.end_layout)
 
         except:
@@ -76,9 +81,9 @@ class DiceRoller:
 
     def roll(self, number):
         number_list = list()
-        print(type(number))
         for i in range(number):
-            number_list[i+1] = str(random.randint(self.low, self.high))
+            random_number = str(random.randint(self.low, self.high))
+            number_list.append(random_number)
         return number_list
 
 r = DiceRoller()
